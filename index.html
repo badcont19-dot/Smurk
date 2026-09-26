@@ -122,7 +122,55 @@
   </div>
 
   <script>
-    function sendMessage() {
+    async function sendMessage() {
+  const input = document.getElementById("userInput");
+  const chat = document.getElementById("chat");
+
+  const message = input.value.trim();
+
+  if (!message) return;
+
+  const userMessage = document.createElement("div");
+  userMessage.className = "message user";
+  userMessage.textContent = message;
+  chat.appendChild(userMessage);
+
+  input.value = "";
+
+  const smurkMessage = document.createElement("div");
+  smurkMessage.className = "message smurk";
+  smurkMessage.textContent = "Thinking...";
+  chat.appendChild(smurkMessage);
+
+  chat.scrollTop = chat.scrollHeight;
+
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Something went wrong.");
+    }
+
+    smurkMessage.textContent = data.reply || "I couldn't generate a response.";
+
+  } catch (error) {
+    smurkMessage.textContent =
+      "Sorry, I couldn't connect to my AI brain right now.";
+    console.error(error);
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+} {
       const input = document.getElementById("userInput");
       const chat = document.getElementById("chat");
 
