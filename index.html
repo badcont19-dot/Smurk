@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smurk AI</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0b0b0f;
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #292929;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    header p {
+      color: #888;
+      margin-top: 5px;
+    }
+
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 14px 16px;
+      margin-bottom: 15px;
+      border-radius: 15px;
+      line-height: 1.5;
+    }
+
+    .user {
+      background: #ffffff;
+      color: #000;
+      margin-left: auto;
+      border-bottom-right-radius: 4px;
+    }
+
+    .smurk {
+      background: #1c1c22;
+      margin-right: auto;
+      border-bottom-left-radius: 4px;
+    }
+
+    #inputArea {
+      display: flex;
+      gap: 10px;
+      padding: 15px;
+      border-top: 1px solid #292929;
+    }
+
+    #userInput {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #1c1c22;
+      color: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 14px 20px;
+      border: none;
+      border-radius: 12px;
+      background: white;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>🤖 Smurk</h1>
+    <p>Your personal AI assistant</p>
+  </header>
+
+  <div id="chat">
+    <div class="message smurk">
+      Hey 👋🏾 I'm Smurk. Ask me anything.
+    </div>
+  </div>
+
+  <div id="inputArea">
+    <input
+      id="userInput"
+      type="text"
+      placeholder="Ask Smurk anything..."
+      onkeydown="if(event.key === 'Enter') sendMessage()"
+    >
+
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const chat = document.getElementById("chat");
+
+      const message = input.value.trim();
+
+      if (!message) return;
+
+      const userMessage = document.createElement("div");
+      userMessage.className = "message user";
+      userMessage.textContent = message;
+      chat.appendChild(userMessage);
+
+      input.value = "";
+
+      const smurkMessage = document.createElement("div");
+      smurkMessage.className = "message smurk";
+      smurkMessage.textContent =
+        "I received your message. My AI brain is being connected next. 🚀";
+
+      chat.appendChild(smurkMessage);
+
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
